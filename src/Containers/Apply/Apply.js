@@ -12,7 +12,7 @@ const Apply = () => {
           <ApplyForm />
         </Col>
         <Col md='6' className='text-center'>
-          <h1 className='text-white display-3'>APPLY</h1>
+          <h1 className='text-white display-3'>Apply</h1>
         </Col>
       </Row>
     </Container>
