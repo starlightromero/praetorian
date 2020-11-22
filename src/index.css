@@ -20,3 +20,7 @@ code {
 .text-grey {
   color: var(--gray);
 }
+
+.uppercase {
+  text-transform: uppercase;
+}
