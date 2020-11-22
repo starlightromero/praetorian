@@ -1,11 +1,12 @@
 import React from 'react'
+import { Container } from 'reactstrap'
 
 const Confirmation = props => {
   return (
-    <div>
-      <h1 className='text-secondary'>THANK YOU FOR APPLYING</h1>
-      <h1 className='text-secondary'>WE WILL BE IN TOUCH</h1>
-    </div>
+    <Container className='h-100 d-flex flex-column justify-content-center align-items-center'>'>
+      <h1 className='text-grey'>THANK YOU FOR APPLYING</h1>
+      <h1 className='text-grey'>WE WILL BE IN TOUCH</h1>
+    </Container>
   )
 }
 
