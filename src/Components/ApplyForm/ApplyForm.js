@@ -14,20 +14,21 @@ class ApplyForm extends Component {
 
   applyHandler = event => {
     event.preventDefault()
-    alert('hi')
-    this.setState({ loading: true })
-    const { name, email, password } = this.state
-    api.post('/user', {
-      name: 'Starlight',
-      email: 'starlight@starlight.com',
-      password: 'password',
-    }).then(response => {
-      console.log(response.data)
-      this.setState({ loading: false })
-      this.props.history.push('/confirmation')
-    }).catch(error => {
-      this.setState({ loading: false })
-    })
+    window.location.href='confirmation/'
+    // this.props.history.push('/confirmation')
+    // this.setState({ loading: true })
+    // const { name, email, password } = this.state
+    // api.post('/user', {
+    //   name: 'Star',
+    //   email: 'star@starlight.com',
+    //   password: 'password',
+    // }).then(response => {
+    //   console.log(response.data)
+    //   this.setState({ loading: false })
+    //   this.props.history.push('/confirmation')
+    // }).catch(error => {
+    //   this.setState({ loading: false })
+    // })
   }
   
   render () {
