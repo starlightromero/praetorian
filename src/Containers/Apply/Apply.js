@@ -1,7 +1,8 @@
 import { React, Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import { Container, Col, Row, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
 import api from '../../api.js'
 import Loader from '../../UI/Loader/Loader'
+import BackButton from '../../Components/BackButton/BackButton'
 
 class Apply extends Component {
   state = {
@@ -60,10 +61,17 @@ class Apply extends Component {
     }
     
     return (
-      <div>
-        <h4>Apply</h4>
-        {form}
-      </div>
+      <Container className='h-100 d-flex flex-column justify-content-center align-items-center'>
+        <BackButton />
+        <Row className='w-100'>
+          <Col md='6'>
+            {form}
+          </Col>
+          <Col md='6' className='text-center'>
+            <h1 className='text-white display-3'>APPLY</h1>
+          </Col>
+        </Row>
+      </Container>
     )
   }
 }
