@@ -14,7 +14,7 @@ const Login = props => {
           <LoginForm />
         </Col>
         <Col md='6' className='text-center'>
-          <h1 className='text-white display-3'>LOGIN</h1>
+          <h1 className='text-white display-3'>Login</h1>
           <Lock className={classes.Lock} />
         </Col>
       </Row>
