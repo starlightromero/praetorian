@@ -1,0 +1,22 @@
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="brick-wall">
+<g id="first-row">
+<path id="brick-2" fill-rule="evenodd" clip-rule="evenodd" d="M299.5 211V300H210.5V211H299.5ZM229 229.5V281.5L281 281.566V229.5H229Z" fill="#919AA1"/>
+<path id="brick-1" fill-rule="evenodd" clip-rule="evenodd" d="M229 211V299.926H69.5V211H229ZM88 229.784V281.284H210.272V229.784H88Z" fill="#919AA1"/>
+<path id="brick-0" fill-rule="evenodd" clip-rule="evenodd" d="M89 211V300H0V211H89ZM18.5 229.5V281.5L70.5 281.566V229.5H18.5Z" fill="#919AA1"/>
+</g>
+<g id="second-row">
+<path id="brick-4" fill-rule="evenodd" clip-rule="evenodd" d="M299.5 141V229.926H140V141H299.5ZM158.5 159.784V211.284H280.772V159.784H158.5Z" fill="#919AA1"/>
+<path id="brick-3" fill-rule="evenodd" clip-rule="evenodd" d="M159.5 140.72V229.646H0V140.72H159.5ZM18.5 159.504V211.004H140.772V159.504H18.5Z" fill="#919AA1"/>
+</g>
+<g id="third-row">
+<path id="brick-7" fill-rule="evenodd" clip-rule="evenodd" d="M299.5 70.36V159.36H210.5V70.36H299.5ZM229 88.86V140.86L281 140.926V88.86H229Z" fill="#919AA1"/>
+<path id="brick-6" fill-rule="evenodd" clip-rule="evenodd" d="M229 70.36V159.286H69.5V70.36H229ZM88 89.1436V140.644H210.272V89.1436H88Z" fill="#919AA1"/>
+<path id="brick-5" fill-rule="evenodd" clip-rule="evenodd" d="M89 70.36V159.36H0V70.36H89ZM18.5 88.86V140.86L70.5 140.926V88.86H18.5Z" fill="#919AA1"/>
+</g>
+<g id="fourth-row">
+<path id="brick-9" fill-rule="evenodd" clip-rule="evenodd" d="M299.5 0V88.9256H140V0H299.5ZM158.5 18.7836V70.2836H280.772V18.7836H158.5Z" fill="#919AA1"/>
+<path id="brick-8" fill-rule="evenodd" clip-rule="evenodd" d="M159.5 0V88.9256H0V0H159.5ZM18.5 18.7836V70.2836H140.772V18.7836H18.5Z" fill="#919AA1"/>
+</g>
+</g>
+</svg>
