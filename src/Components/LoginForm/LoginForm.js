@@ -17,7 +17,7 @@ const LoginForm = props => {
       <NavLink
         exact
         to='/account'>
-        <Button color='primary' className='w-100'>LOGIN</Button>
+        <Button color='primary' className='w-100'>Login</Button>
       </NavLink>
     </Form>
   )
