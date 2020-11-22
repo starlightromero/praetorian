@@ -1,0 +1,6 @@
+.Shield {
+  z-index: -10;
+  position: absolute;
+  top: calc(50% - height / 2);
+  left: calc(50% - width / 2);
+}
