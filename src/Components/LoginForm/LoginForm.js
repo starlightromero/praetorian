@@ -7,17 +7,17 @@ const LoginForm = props => {
   return (
     <Form className={classes.Form}>
       <FormGroup>
-        <Label for='email'>Email</Label>
+        <Label for='email' className='text-grey'>Email</Label>
         <Input type='email' name='email' id='email' placeholder='Enter your email' />
       </FormGroup>
       <FormGroup>
-        <Label for='pasword'>Password</Label>
+        <Label for='pasword' className='text-grey'>Password</Label>
         <Input type='password' name='password' id='password' placeholder='Enter your password' />
       </FormGroup>
       <NavLink
         exact
         to='/account'>
-        <Button color='primary'>LOGIN</Button>
+        <Button color='primary' className='w-100'>LOGIN</Button>
       </NavLink>
     </Form>
   )
