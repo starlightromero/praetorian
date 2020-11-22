@@ -1,7 +1,8 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import LoginForm from '../../Components/LoginForm/LoginForm'
 import { ReactComponent as Lock } from '../../assets/lock.svg'
+import classes from './Login.module.css'
+import LoginForm from '../../Components/LoginForm/LoginForm'
 
 const Login = props => {
   return (
@@ -12,7 +13,7 @@ const Login = props => {
         </Col>
         <Col md='6' className='text-center'>
           <h1 className='text-white display-3'>LOGIN</h1>
-          <Lock />
+          <Lock className='Lock' />
         </Col>
       </Row>
     </Container>
