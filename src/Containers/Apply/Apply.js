@@ -23,6 +23,7 @@ class Apply extends Component {
     }).then(response => {
       console.log(response.data)
       this.setState({ loading: false })
+      this.props.history.push('/confirmation')
     }).catch(error => {
       this.setState({ loading: false })
     })
