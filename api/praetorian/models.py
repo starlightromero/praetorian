@@ -9,6 +9,7 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.Text)
+    account_type = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
         """Return User."""
@@ -21,8 +22,8 @@ class User(db.Model):
 
     @property
     def rolenames(self):
-        """Return an empty list."""
-        return []
+        """Return a list of User's account type."""
+        return [self.account_type]
 
     @classmethod
     def lookup(cls, email):
