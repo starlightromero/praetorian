@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap'
 import classes from './LoginForm.module.css'
 import api from '../../api.js'
-import Loader from '../../UI/Loader/Loader'
+import Loader from '../UI/Loader/Loader'
 
 class LoginForm extends Component {
   state = {

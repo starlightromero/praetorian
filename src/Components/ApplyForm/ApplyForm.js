@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap'
 import classes from './ApplyForm.module.css'
 import api from '../../api.js'
-import Loader from '../../UI/Loader/Loader'
+import Loader from '../UI/Loader/Loader'
 
 class ApplyForm extends Component {
   state = {
