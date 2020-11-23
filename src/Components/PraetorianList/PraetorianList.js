@@ -8,6 +8,7 @@ const PraetorianList = props => {
       <PraetorianItem
         key={praetorian}
         name={praetorian}
+        clicked={props.showDetail}
         status='Active' />
     ))
   )
