@@ -13,7 +13,11 @@ class User(db.Model):
 
     def __repr__(self):
         """Return User."""
-        return f"Account(name: '{self.name}', email: '{self.email}')"
+        if self.account_type == "praetorian":
+            return f"Praetorian(name: '{self.name}', email: '{self.email}')"
+        if self.account_type == "executive":
+            return f"Executive(name: '{self.name}', email: '{self.email}')"
+        return f"User(name: '{self.name}', email: '{self.email}')"
 
     @property
     def identity(self):
