@@ -30,3 +30,16 @@ def create_user():
         jsonify({"message": f"{user.name} has been created"}),
         201,
     )
+
+
+@api.route("/login", methods=["POST"])
+def login_user():
+    """Login User and return token and username."""
+    email = request.json.get("email")
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User does not exists"})
+    password = request.json.get("password")
+    user = guard.authenticate(email, password)
+    token = guard.encode_jwt_token(user)
+    return jsonify({"token": token, "username": user.name}), 200
