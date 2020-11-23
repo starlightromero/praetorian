@@ -150,32 +150,37 @@ class ApplyForm extends Component {
         
         if (formElement.config.type === 'select' && formElement.config.options) {
           options = formElement.config.options.map(option => (
-            <option value={option.value}>{option.display}</option>
+            <option value={option.value} key={option.value}>
+              {option.display}
+            </option>
           ))
         }
 
         let feedback = (
-          <FormText>
+          <FormText key={`text-${formElement.id}`}>
             {formElement.config.invalidText}
           </FormText>
         )
         if (formElement.config.valid) {
           feedback = (
-            <FormFeedback valid>
+            <FormFeedback valid key={`valid-${formElement.id}`}>
               {formElement.config.validText}
             </FormFeedback>
           )
         } else if (!formElement.config.valid && formElement.config.touched) {
           feedback = (
-            <FormFeedback invalid>
+            <FormFeedback invalid key={`invalid-${formElement.id}`}>
               {formElement.config.invalidText}
             </FormFeedback>
           )
         }
 
         return (
-          <FormGroup>
-            <Label for={formElement.config.name} className='text-grey'>
+          <FormGroup key={`label-${formElement.id}`}>
+            <Label
+              key={`label-${formElement.id}`}
+              for={formElement.config.name}
+              className='text-grey'>
               {formElement.config.display}
             </Label>
             <Input
