@@ -46,6 +46,7 @@ class LoginForm extends Component {
   loginHandler = event => {
     event.preventDefault()
     alert('complete')
+    console.log(this.props)
   }
 
   checkValidity = (value, rules) => {
