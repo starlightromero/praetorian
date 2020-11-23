@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap'
 import classes from './ApplyForm.module.css'
 import api from '../../api.js'
 import Loader from '../../UI/Loader/Loader'
@@ -16,6 +16,8 @@ class ApplyForm extends Component {
         validation: {
           required: true
         },
+        validText: 'Your name has been approved',
+        invalidText: 'Name cannot be empty',
         valid: false,
         touched: false
       },
@@ -30,17 +32,23 @@ class ApplyForm extends Component {
           isEmail: true
         },
         valid: false,
+        validText: 'Your email address is valid',
+        invalidText: 'Please enter a valid email address',
         touched: false
       },
       password: {
         type: 'password',
         display: 'Password',
         name: 'password',
-        placeholder: 'Enter your password',
+        placeholder: 'Enter a password',
         value: '',
         validation: {
-          required: true
+          required: true,
+          minLength: 8,
+          maxLength: 20,
         },
+        validText: 'The password has been approved',
+        invalidText: 'Password must be between 8 and 20 characters',
         valid: false,
         touched: false
       },
@@ -54,6 +62,8 @@ class ApplyForm extends Component {
         ],
         value: 'praetorian',
         validation: {},
+        validText: '',
+        invalidText: '',
         valid: true
       }
     },
@@ -87,6 +97,12 @@ class ApplyForm extends Component {
     }
     if(rules.required) {
       isValid = value.trim() !== '' && isValid
+    }
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid
+    }
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid
     }
     if (rules.isEmail) {
       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -136,14 +152,20 @@ class ApplyForm extends Component {
         }
 
         let feedback = (
-          <FormFeedback invalid>
-            Oh no! that name is not available
-          </FormFeedback>
+          <FormText>
+            {formElement.config.invalidText}
+          </FormText>
         )
         if (formElement.config.valid) {
           feedback = (
             <FormFeedback valid>
-              Sweet! that name is available
+              {formElement.config.validText}
+            </FormFeedback>
+          )
+        } else if (!formElement.config.valid && formElement.config.touched) {
+          feedback = (
+            <FormFeedback invalid>
+              {formElement.config.invalidText}
             </FormFeedback>
           )
         }
@@ -159,7 +181,7 @@ class ApplyForm extends Component {
               value={formElement.config.value}
               placeholder={formElement.config.placeholder}
               valid={formElement.config.valid}
-              invalid={!formElement.config.valid}
+              invalid={formElement.config.touched ? !formElement.config.valid : false}
               onChange={event => this.inputChangedHandler(event, formElement.id)}>
             {options}
             </Input>
