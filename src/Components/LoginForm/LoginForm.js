@@ -146,6 +146,7 @@ class LoginForm extends Component {
             </Label>
             <Input
               key={formElement.id}
+              id={formElement.id}
               type={formElement.config.type}
               value={formElement.config.value}
               placeholder={formElement.config.placeholder}
