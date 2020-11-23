@@ -3,6 +3,7 @@
   left: 30px;
   position: absolute;
   top: 30px;
+  z-index: 100;
 }
 
 .BackButton:hover {
