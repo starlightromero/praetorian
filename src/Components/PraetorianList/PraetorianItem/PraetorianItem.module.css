@@ -10,12 +10,15 @@
   width: 100%;
 }
 
+.Item h6 {
+  margin: 0;
+}
+
 .Item:hover {
   background-color: var(--gray-dark);
-  color: var(--white);
   cursor: pointer;
 }
 
-.Item h6 {
-  margin: 0;
+.Item:hover h6 {
+  color: var(--white);
 }
