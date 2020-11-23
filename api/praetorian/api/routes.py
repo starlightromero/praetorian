@@ -16,8 +16,14 @@ def create_user():
         return jsonify({"error": "User already exists"})
     name = request.json.get("name")
     password = request.json.get("password")
+    account_type = request.json.get("account")
     hashed_password = guard.hash_password(password)
-    user = User(name=name, email=email, password=hashed_password)
+    user = User(
+        name=name,
+        email=email,
+        password=hashed_password,
+        account_type=account_type,
+    )
     db.session.add(user)
     db.session.commit()
     return (
