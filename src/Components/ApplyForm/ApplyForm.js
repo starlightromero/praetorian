@@ -50,7 +50,7 @@ class ApplyForm extends Component {
           <Label for='select'>Select</Label>
           <Input type='select' name='select' id='select'>
             <option>Praetorian</option>
-            <option>2</option>
+            <option>Executive</option>
           </Input>
         </FormGroup>
         <Button color='primary' onClick={this.applyHandler}>Apply</Button>
