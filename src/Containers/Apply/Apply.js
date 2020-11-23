@@ -13,7 +13,7 @@ const Apply = props => {
           <ApplyForm {...props} />
         </Col>
         <Col md='6' className='text-center'>
-          <h1 className='text-white display-3 mb-5'>Start Application</h1>
+          <h1 className='text-white display-3 mb-5'>Apply</h1>
           <Papers />
         </Col>
       </Row>
