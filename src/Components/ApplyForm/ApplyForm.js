@@ -85,9 +85,10 @@ class ApplyForm extends Component {
       password,
       account
     }).then(response => {
-      console.log(response.data)
       this.setState({ loading: false })
-      this.props.history.push('/confirmation')
+      if (account === 'praetorian') {
+        this.props.history.push('/praetorian-application')
+      }
     }).catch(error => {
       this.setState({ loading: false })
     })
@@ -185,6 +186,7 @@ class ApplyForm extends Component {
             </Label>
             <Input
               key={formElement.id}
+              id={formElement.id}
               type={formElement.config.type}
               value={formElement.config.value}
               placeholder={formElement.config.placeholder}
