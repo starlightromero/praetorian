@@ -57,7 +57,7 @@ class LoginForm extends Component {
     }).then(response => {
       console.log(response.data)
       this.setState({ loading: false })
-      this.props.history.push('/dashboard')
+      this.props.history.push('/account')
     }).catch(error => {
       this.setState({ loading: false })
     })
