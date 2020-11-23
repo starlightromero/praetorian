@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import { ReactComponent as Shield } from '../../assets/shield.svg'
-import { ReactComponent as Add } from '../../assets/add-button.svg'
 import api from '../../api'
 import PraetorianList from '../../Components/PraetorianList/PraetorianList'
 import DetailView from '../../Components/DetailView/DetailView'
-import Backdrop from '../../Components/UI/Backdrop/Backdrop'
+import AddButton from '../../Components/AddButton/AddButton'
 
 class Dashboard extends Component {
   state = {
@@ -44,6 +43,7 @@ class Dashboard extends Component {
             <PraetorianList
               praetorians={praetorians}
               showDetail={this.detailShowHandler} />
+            <AddButton />
           </Col>
           <Col md='6' className='text-center d-flex flex-column justify-content-center align-items-center'>
             <DetailView
