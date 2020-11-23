@@ -1,0 +1,21 @@
+.Item {
+  align-items: center;
+  background-color: var(--gray);
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.Item:hover {
+  background-color: var(--gray-dark);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.Item h6 {
+  margin: 0;
+}
