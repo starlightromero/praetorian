@@ -7,6 +7,16 @@ from praetorian.models import User
 api = Blueprint("api", __name__)
 
 
+@api.route("/praetorians", methods=["GET"])
+def get_praetorians():
+    """Return all Praetorians."""
+    praetorians = User.query.filter_by(account_type="praetorian").all()
+    praetorian_list = []
+    for praetorian in praetorians:
+        praetorian_list.append(praetorian.name)
+    return jsonify({"praetorians": praetorian_list})
+
+
 @api.route("/user", methods=["POST"])
 def create_user():
     """Create User in database."""
