@@ -10,7 +10,7 @@ const LearnMore = props => {
   return (
     <>
       <Container fluid className='m-0 p-0'>
-        <BackButton />
+        <BackButton {...props} />
         <Row className='justify-content-end m-0 p-0'>
           <Col md='2' className='mt-3 text-right'>
             <NavLink
