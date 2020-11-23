@@ -189,6 +189,7 @@ class ApplyForm extends Component {
           </FormGroup>
         )})}
         <Button
+          block
           color='primary'
           onClick={this.applyHandler}
           disabled={!this.state.formIsValid}>
