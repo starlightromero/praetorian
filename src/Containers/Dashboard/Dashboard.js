@@ -4,10 +4,14 @@ import { ReactComponent as Shield } from '../../assets/shield.svg'
 import { ReactComponent as Add } from '../../assets/add-button.svg'
 import api from '../../api'
 import PraetorianList from '../../Components/PraetorianList/PraetorianList'
+import DetailView from '../../Components/DetailView/DetailView'
+import Backdrop from '../../Components/UI/Backdrop/Backdrop'
 
 class Dashboard extends Component {
   state = {
-    praetorians: []
+    praetorians: [],
+    showDetail: false,
+    activePraetorian: null
   }
 
   componentWillMount () {
@@ -18,14 +22,34 @@ class Dashboard extends Component {
     })
   }
 
+  detailShowHandler = praetorian => {
+    this.changeActivePraetorian(praetorian)
+    this.setState({ showDetail: true })
+  }
+
+  detailCloseHandler = () => {
+    this.setState({ showDetail: false })
+  }
+
+  changeActivePraetorian = praetorian => {
+    this.setState({ activePraetorian: praetorian })
+  }
+
   render() {
+    const { praetorians, showDetail, activePraetorian } = this.state
     return (
       <Container fluid className='h-100'>
         <Row className='h-100'>
           <Col md='6' className='text-center'>
-            <PraetorianList praetorians={this.state.praetorians} />
+            <PraetorianList
+              praetorians={praetorians}
+              showDetail={this.detailShowHandler} />
           </Col>
           <Col md='6' className='text-center d-flex flex-column justify-content-center align-items-center'>
+            <DetailView
+              show={showDetail}
+              clicked={this.detailCloseHandler}
+              praetorian={activePraetorian} />
             <h1 className='text-white display-3'>Account</h1>
             <Shield />
           </Col>
