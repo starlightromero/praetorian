@@ -1,0 +1,270 @@
+import React, { Component } from 'react'
+import { 
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  CustomInput,
+  FormText, 
+  FormFeedback 
+} from 'reactstrap'
+import classes from './PraetorianApplication.module.css'
+import Loader from '..//UI/Loader/Loader'
+
+class PraetorianApplication extends Component {
+  state = {
+    applicationForm: {
+      experience: {
+        type: 'range',
+        display: 'Experience',
+        name: 'experience',
+        placeholder: '',
+        value: '',
+        step: '1',
+        min: '0',
+        max: '10',
+        className: 'custom-range',
+        validation: {},
+        valid: true,
+        validText: '',
+        invalidText: '',
+      },
+      phone: {
+        type: 'tel',
+        display: 'Phone',
+        name: 'phone',
+        placeholder: 'Enter your phone number',
+        value: '',
+        validation: {
+          required: true,
+          isPhone: true
+        },
+        validText: 'Your phone is valid',
+        invalidText: 'Enter a valid phone number',
+        valid: false,
+        touched: false
+      },
+      address: {
+        type: 'text',
+        display: 'Address',
+        name: 'address',
+        placeholder: 'Enter your address',
+        value: '',
+        validation: {
+          required: true,
+        },
+        validText: 'Your address is valid',
+        invalidText: 'Enter a valid address',
+        valid: false,
+        touched: false
+      },
+      city: {
+        type: 'text',
+        display: 'City',
+        name: 'city',
+        placeholder: 'Enter your city',
+        value: '',
+        validation: {
+          required: true,
+        },
+        validText: 'Your city is valid',
+        invalidText: 'Enter a valid city',
+        valid: false,
+        touched: false
+      },
+      state: {
+        type: 'text',
+        display: 'State',
+        name: 'state',
+        placeholder: 'Enter your state',
+        value: '',
+        validation: {
+          required: true,
+          minLength: 2,
+          maxLength: 2
+        },
+        validText: 'Your state is valid',
+        invalidText: 'Enter a valid state',
+        valid: false,
+        touched: false
+      },
+      travel: {
+        type: 'switch',
+        display: 'Willing to travel?',
+        name: 'travel',
+        placeholder: '',
+        value: false,
+        validation: {},
+        validText: '',
+        invalidText: '',
+        valid: true,
+      },
+      background: {
+        type: 'switch',
+        display: 'Willing to submit to a background check?',
+        name: 'background',
+        placeholder: '',
+        value: false,
+        validation: {},
+        validText: '',
+        invalidText: '',
+        valid: true,
+      },
+    },
+    formIsValid: false,
+    loading: false
+  }
+
+  applicationHandler = event => {
+    event.preventDefault()
+  }
+
+  checkValidity = (value, rules) => {
+    let isValid = true
+    if (!rules) {
+      return true
+    }
+    if(rules.required) {
+      isValid = value.trim() !== '' && isValid
+    }
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid
+    }
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid
+    }
+    if (rules.isPhone) {
+      const pattern = /[0-9]{10}/
+      isValid = pattern.test(value) && isValid
+    }
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+      isValid = pattern.test(value) && isValid
+    }
+
+    return isValid
+  }
+
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedApplicationForm = {
+      ...this.state.applicationForm
+    }
+    const updatedFormElement = {
+      ...updatedApplicationForm[inputIdentifier]
+    }
+    updatedFormElement.value = event.target.value
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+    updatedFormElement.touched = true
+    updatedApplicationForm[inputIdentifier] = updatedFormElement
+
+    let formIsValid = true
+    for (let inputIdentifier in updatedApplicationForm) {
+      formIsValid = updatedApplicationForm[inputIdentifier].valid && formIsValid
+    }
+    this.setState({applicationForm: updatedApplicationForm, formIsValid: formIsValid})
+  }
+
+  render () {
+    const formElementsArray = []
+    for (let key in this.state.applicationForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.applicationForm[key],
+      })
+    }
+
+    let form = (
+      <Form className={classes.Form} onSubmit={this.applyHandler}>
+      {formElementsArray.map(formElement => {
+
+        let feedback = (
+          <FormText key={`text-${formElement.id}`}>
+            {formElement.config.invalidText}
+          </FormText>
+        )
+        if (formElement.config.valid) {
+          feedback = (
+            <FormFeedback valid key={`valid-${formElement.id}`}>
+              {formElement.config.validText}
+            </FormFeedback>
+          )
+        } else if (!formElement.config.valid && formElement.config.touched) {
+          feedback = (
+            <FormFeedback invalid key={`invalid-${formElement.id}`}>
+              {formElement.config.invalidText}
+            </FormFeedback>
+          )
+        }
+
+        if (formElement.config.type === 'switch') {
+          return (
+            <FormGroup className='form-inline'>
+              <Label for={formElement.config.name} className='mr-3 noselect'>
+                {formElement.config.display}
+              </Label>
+              <CustomInput
+                type={formElement.config.type}
+                id={formElement.config.name}
+                name={formElement.config.name} />
+            </FormGroup>
+          )
+        }
+
+        if (formElement.config.type === 'range') {
+          return (
+            <FormGroup>
+              <Label for={formElement.config.name}>{formElement.config.display}</Label>
+              <CustomInput
+                step={formElement.config.step}
+                min={formElement.config.min}
+                max={formElement.config.max}
+                type={formElement.config.type}
+                className='custom-range'
+                id={formElement.config.name} />
+            </FormGroup>
+          )
+        }
+
+        return (
+          <FormGroup key={`label-${formElement.id}`}>
+            <Label
+              key={`label-${formElement.id}`}
+              for={formElement.config.name}>
+              {formElement.config.display}
+            </Label>
+            <Input
+              key={formElement.id}
+              id={formElement.id}
+              type={formElement.config.type}
+              value={formElement.config.value}
+              placeholder={formElement.config.placeholder}
+              valid={formElement.config.valid}
+              invalid={formElement.config.touched ? !formElement.config.valid : false}
+              onChange={event => this.inputChangedHandler(event, formElement.id)} />
+            {feedback}
+          </FormGroup>
+        )})}
+        <Button
+          block
+          color='primary'
+          onClick={this.applyHandler}
+          disabled={!this.state.formIsValid}>
+          Submit Application
+        </Button>
+      </Form>
+    )
+
+    if (this.state.loading === true) {
+      form = <Loader />
+    }
+    
+    return (
+      <>
+        {form}
+      </>
+    )
+  }
+}
+
+export default PraetorianApplication
