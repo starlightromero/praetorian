@@ -73,21 +73,24 @@ class ApplyForm extends Component {
 
   applyHandler = event => {
     event.preventDefault()
-    alert('complete')
-    // this.props.history.push('/confirmation')
-    // this.setState({ loading: true })
-    // const { name, email, password } = this.state
-    // api.post('/user', {
-    //   name: 'Star',
-    //   email: 'star@starlight.com',
-    //   password: 'password',
-    // }).then(response => {
-    //   console.log(response.data)
-    //   this.setState({ loading: false })
-    //   this.props.history.push('/confirmation')
-    // }).catch(error => {
-    //   this.setState({ loading: false })
-    // })
+    this.setState({ loading: true })
+    const formData = {}
+    for (let formElementIdentifier in this.state.applyForm) {
+      formData[formElementIdentifier] = this.state.applyForm[formElementIdentifier].value
+    }
+    const { name, email, password, account } = formData
+    api.post('/user', {
+      name,
+      email,
+      password,
+      account
+    }).then(response => {
+      console.log(response.data)
+      this.setState({ loading: false })
+      this.props.history.push('/confirmation')
+    }).catch(error => {
+      this.setState({ loading: false })
+    })
   }
 
   checkValidity = (value, rules) => {
