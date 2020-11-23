@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap'
-import { NavLink } from 'react-router-dom'
 import classes from './LoginForm.module.css'
+import api from '../../api.js'
 import Loader from '../../UI/Loader/Loader'
 
 class LoginForm extends Component {
@@ -45,8 +45,22 @@ class LoginForm extends Component {
 
   loginHandler = event => {
     event.preventDefault()
-    alert('complete')
-    console.log(this.props)
+    this.setState({ loading: true })
+    const formData = {}
+    for (let formElementIdentifier in this.state.loginForm) {
+      formData[formElementIdentifier] = this.state.loginForm[formElementIdentifier].value
+    }
+    const { email, password } = formData
+    api.post('/login', {
+      email,
+      password
+    }).then(response => {
+      console.log(response.data)
+      this.setState({ loading: false })
+      // this.props.history.push('/confirmation')
+    }).catch(error => {
+      this.setState({ loading: false })
+    })
   }
 
   checkValidity = (value, rules) => {
@@ -104,27 +118,30 @@ class LoginForm extends Component {
       <Form className={classes.Form} onSubmit={this.loginHandler}>
       {formElementsArray.map(formElement => {
         let feedback = (
-          <FormText>
+          <FormText key={`text-${formElement.id}`}>
             {formElement.config.invalidText}
           </FormText>
         )
         if (formElement.config.valid) {
           feedback = (
-            <FormFeedback valid>
+            <FormFeedback valid key={`valid-${formElement.id}`}>
               {formElement.config.validText}
             </FormFeedback>
           )
         } else if (!formElement.config.valid && formElement.config.touched) {
           feedback = (
-            <FormFeedback invalid>
+            <FormFeedback invalid key={`invalid-${formElement.id}`}>
               {formElement.config.invalidText}
             </FormFeedback>
           )
         }
 
         return (
-          <FormGroup>
-            <Label for={formElement.config.name} className='text-grey'>
+          <FormGroup key={`group-${formElement.id}`}>
+            <Label
+              key={`label-${formElement.id}`}
+              for={formElement.config.name}
+              className='text-grey'>
               {formElement.config.display}
             </Label>
             <Input
