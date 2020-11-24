@@ -1,4 +1,5 @@
 """Import libraries."""
+from sqlalchemy.orm import backref
 from praetorian import db
 
 
@@ -13,10 +14,6 @@ class User(db.Model):
 
     def __repr__(self):
         """Return User."""
-        if self.account_type == "praetorian":
-            return f"Praetorian(name: '{self.name}', email: '{self.email}')"
-        if self.account_type == "executive":
-            return f"Executive(name: '{self.name}', email: '{self.email}')"
         return f"User(name: '{self.name}', email: '{self.email}')"
 
     @property
@@ -40,37 +37,29 @@ class User(db.Model):
         return cls.query.get(id)
 
 
-unit = db.Table(
-    "unit",
-    db.Column(
-        "executive_id",
-        db.Integer,
-        db.ForeignKey("executive.id"),
-        primary_key=True,
-    ),
-    db.Column(
-        "praetorian_id",
-        db.Integer,
-        db.ForeignKey("praetorian.id"),
-        primary_key=True,
-    ),
-)
-
-
-class Executive(User):
+class Executive(db.Model):
     """Executive class extends User."""
 
-    unit = db.relationship(
-        "Unit",
-        secondary=unit,
-        lazy="subquery",
-        backref=db.backref("executive", lazy=True),
-    )
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    password = db.Column(db.Text)
+    account_type = db.Column(db.String(20), nullable=False)
+    praetorians = db.relationship("Praetorian", secondary="unit")
+
+    def __repr__(self):
+        """Return Executive."""
+        return f"Executive(name: '{self.name}', email: '{self.email}')"
 
 
-class Praetorian(User):
+class Praetorian(db.Model):
     """Praetorian class extends User."""
 
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    password = db.Column(db.Text)
+    account_type = db.Column(db.String(20), nullable=False)
     experience = db.Column(db.Integer)
     phone = db.Column(db.Integer)
     address = db.Column(db.String(40))
@@ -78,9 +67,22 @@ class Praetorian(User):
     state = db.Column(db.String(2))
     travel = db.Column(db.Boolean)
     background = db.Column(db.Boolean)
-    unit = db.relationship(
-        "Unit",
-        secondary=unit,
-        lazy="subquery",
-        backref=db.backref("praetorian", lazy=True),
+    executives = db.relationship("Executive", secondary="unit")
+
+    def __repr__(self):
+        """Return Praetorian."""
+        return f"Praetorian(name: '{self.name}', email: '{self.email}')"
+
+
+class Unit(db.Model):
+    """Executive Praetorian Link many-to-many database class."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    executive_id = db.Column(db.Integer, db.ForeignKey("executive.id"))
+    praetorian_id = db.Column(db.Integer, db.ForeignKey("praetorian.id"))
+    executive = db.relationship(
+        "Executive", backref=backref("unit", cascade="all, delete-orphan")
+    )
+    praetorian = db.relationship(
+        "Praetorian", backref=backref("unit", cascade="all, delete-orphan")
     )
