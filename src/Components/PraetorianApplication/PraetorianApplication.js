@@ -95,7 +95,7 @@ class PraetorianApplication extends Component {
         display: 'Willing to travel?',
         name: 'travel',
         placeholder: '',
-        value: false,
+        value: 'off',
         validation: {},
         validText: '',
         invalidText: '',
@@ -106,7 +106,7 @@ class PraetorianApplication extends Component {
         display: 'Willing to submit to a background check?',
         name: 'background',
         placeholder: '',
-        value: false,
+        value: 'off',
         validation: {},
         validText: '',
         invalidText: '',
@@ -125,14 +125,16 @@ class PraetorianApplication extends Component {
       formData[formElementIdentifier] = this.state.applicationForm[formElementIdentifier].value
     }
     const { experience, phone, address, city, state, travel, background } = formData
+    const id = this.props.match.params.id
     api.patch('/praetorian', {
-      experience,
-      phone,
+      id,
+      experience: +experience,
+      phone: +phone,
       address,
       city,
       state,
-      travel,
-      background
+      travel: travel === 'on' ? true : false,
+      background: background === 'on' ? true : false
     }).then(res => {
       console.log(res)
       this.setState({ loading: false })
@@ -233,7 +235,8 @@ class PraetorianApplication extends Component {
                 key={formElement.id}
                 type={formElement.config.type}
                 id={formElement.config.name}
-                name={formElement.config.name} />
+                name={formElement.config.name}
+                onChange={event => this.inputChangedHandler(event, formElement.id)} />
             </FormGroup>
           )
         }
@@ -251,7 +254,8 @@ class PraetorianApplication extends Component {
                 max={formElement.config.max}
                 type={formElement.config.type}
                 className='custom-range'
-                id={formElement.config.name} />
+                id={formElement.config.name}
+                onChange={event => this.inputChangedHandler(event, formElement.id)} />
             </FormGroup>
           )
         }
@@ -278,7 +282,7 @@ class PraetorianApplication extends Component {
         <Button
           block
           color='primary'
-          onClick={this.applyHandler}
+          onClick={this.applicationHandler}
           disabled={!this.state.formIsValid}>
           Submit Application
         </Button>
