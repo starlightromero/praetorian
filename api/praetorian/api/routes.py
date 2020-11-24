@@ -63,6 +63,7 @@ def update_praetorian():
     )
 
 
+@api.route("/executive", methods=["POST"])
 def create_executive():
     """Create a new Executive in database."""
     email = request.json.get("email")
