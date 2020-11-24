@@ -5,7 +5,7 @@ import classes from './AddButton.module.css'
 const AddButton = props => {
   return (
     <>
-      <AddIcon className={classes.AddButton} />
+      <AddIcon className={classes.AddButton} onClick={props.clicked} />
     </>
   )
 }
