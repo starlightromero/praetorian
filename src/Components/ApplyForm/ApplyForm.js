@@ -71,6 +71,34 @@ class ApplyForm extends Component {
     loading: false
   }
 
+  createPraetorian = (name, email, password, account) => {
+    api.post('/praetorian', {
+      name,
+      email,
+      password,
+      account
+    }).then(response => {
+      this.setState({ loading: false })
+      this.props.history.push('/praetorian-application')
+    }).catch(error => {
+      this.setState({ loading: false })
+    })
+  }
+
+  createExecutive = (name, email, password, account) => {
+    api.post('/executive', {
+      name,
+      email,
+      password,
+      account
+    }).then(response => {
+      this.setState({ loading: false })
+      this.props.history.push('/confirmation')
+    }).catch(error => {
+      this.setState({ loading: false })
+    })
+  }
+
   applyHandler = event => {
     event.preventDefault()
     this.setState({ loading: true })
@@ -79,21 +107,11 @@ class ApplyForm extends Component {
       formData[formElementIdentifier] = this.state.applyForm[formElementIdentifier].value
     }
     const { name, email, password, account } = formData
-    api.post('/user', {
-      name,
-      email,
-      password,
-      account
-    }).then(response => {
-      this.setState({ loading: false })
-      if (account === 'praetorian') {
-        this.props.history.push('/praetorian-application')
-      } else if (account === 'executive') {
-        this.props.history.push('/confirmation')
-      }
-    }).catch(error => {
-      this.setState({ loading: false })
-    })
+    if (account === 'praetorian') {
+      this.createPraetorian(name, email, password, account)
+    } else if (account === 'executive') {
+      this.createExecutive(name, email, password, account)
+    }
   }
 
   checkValidity = (value, rules) => {
