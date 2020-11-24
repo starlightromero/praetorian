@@ -47,6 +47,10 @@ class Dashboard extends Component {
     this.setState({ showAdd: false })
   }
 
+  removePraetorianHandler = () => {
+    
+  }
+
   render() {
     const { praetorians, showDetail, showAdd, activePraetorian } = this.state
     
@@ -67,6 +71,7 @@ class Dashboard extends Component {
             <DetailView
               show={showDetail}
               clicked={this.detailCloseHandler}
+              removeClicked={this.removePraetorianHandler}
               praetorian={activePraetorian} />
             <h1 className='text-white display-3'>Account</h1>
             <Shield />
