@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { 
+import {
   Form,
   FormGroup,
   Label,
   Input,
   Button,
   CustomInput,
-  FormText, 
-  FormFeedback 
+  FormText,
+  FormFeedback
 } from 'reactstrap'
 import classes from './PraetorianApplication.module.css'
 import Loader from '..//UI/Loader/Loader'
@@ -136,6 +136,7 @@ class PraetorianApplication extends Component {
     }).then(res => {
       console.log(res)
       this.setState({ loading: false })
+      this.props.history.push('/confirmation')
     }).catch(err => {
       console.log(err)
       this.setState({ loading: false })
@@ -221,11 +222,15 @@ class PraetorianApplication extends Component {
 
         if (formElement.config.type === 'switch') {
           return (
-            <FormGroup className='form-inline'>
-              <Label for={formElement.config.name} className='mr-3 noselect'>
+            <FormGroup className='form-inline' key={`group-${formElement.id}`}>
+              <Label
+                key={`label-${formElement.id}`}
+                for={formElement.config.name}
+                className='mr-3 noselect'>
                 {formElement.config.display}
               </Label>
               <CustomInput
+                key={formElement.id}
                 type={formElement.config.type}
                 id={formElement.config.name}
                 name={formElement.config.name} />
@@ -235,9 +240,12 @@ class PraetorianApplication extends Component {
 
         if (formElement.config.type === 'range') {
           return (
-            <FormGroup>
-              <Label for={formElement.config.name}>{formElement.config.display}</Label>
+            <FormGroup key={`group-${formElement.id}`}>
+              <Label for={formElement.config.name} key={`label-${formElement.id}`}>
+                {formElement.config.display}
+              </Label>
               <CustomInput
+                key={formElement.id}
                 step={formElement.config.step}
                 min={formElement.config.min}
                 max={formElement.config.max}
@@ -249,7 +257,7 @@ class PraetorianApplication extends Component {
         }
 
         return (
-          <FormGroup key={`label-${formElement.id}`}>
+          <FormGroup key={`group-${formElement.id}`}>
             <Label
               key={`label-${formElement.id}`}
               for={formElement.config.name}>
@@ -280,7 +288,7 @@ class PraetorianApplication extends Component {
     if (this.state.loading === true) {
       form = <Loader />
     }
-    
+
     return (
       <>
         {form}
