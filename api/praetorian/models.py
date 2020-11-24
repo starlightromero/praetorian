@@ -38,3 +38,49 @@ class User(db.Model):
     def identify(cls, id):
         """Return User with the given id."""
         return cls.query.get(id)
+
+
+unit = db.Table(
+    "unit",
+    db.Column(
+        "executive_id",
+        db.Integer,
+        db.ForeignKey("executive.id"),
+        primary_key=True,
+    ),
+    db.Column(
+        "praetorian_id",
+        db.Integer,
+        db.ForeignKey("praetorian.id"),
+        primary_key=True,
+    ),
+)
+
+
+class Executive(User):
+    """Executive class extends User."""
+
+    unit = db.relationship(
+        "Unit",
+        secondary=unit,
+        lazy="subquery",
+        backref=db.backref("executive", lazy=True),
+    )
+
+
+class Praetorian(User):
+    """Praetorian class extends User."""
+
+    experience = db.Column(db.Integer)
+    phone = db.Column(db.Integer)
+    address = db.Column(db.String(40))
+    city = db.Column(db.String(20))
+    state = db.Column(db.String(2))
+    travel = db.Column(db.Boolean)
+    background = db.Column(db.Boolean)
+    unit = db.relationship(
+        "Unit",
+        secondary=unit,
+        lazy="subquery",
+        backref=db.backref("praetorian", lazy=True),
+    )
