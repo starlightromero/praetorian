@@ -37,7 +37,12 @@ def create_praetorian():
     db.session.add(praetorian)
     db.session.commit()
     return (
-        jsonify({"message": f"{praetorian.name} has been created"}),
+        jsonify(
+            {
+                "id": praetorian.id,
+                "message": f"{praetorian.name} has been created",
+            }
+        ),
         201,
     )
 
@@ -45,8 +50,8 @@ def create_praetorian():
 @api.route("/praetorian", methods=["PATCH"])
 def update_praetorian():
     """Update a Praetorian in database."""
-    email = request.json.get("email")
-    praetorian = Praetorian.query.filter_by(email=email).first()
+    praetorian_id = request.json.get("id")
+    praetorian = Praetorian.query.get(praetorian_id)
     if not praetorian:
         return jsonify({"error": "Praetorian does not exist"})
     praetorian.experience = request.json.get("experience")
@@ -59,7 +64,7 @@ def update_praetorian():
     db.session.commit()
     return (
         jsonify({"message": f"{praetorian.name} has been updated"}),
-        201,
+        200,
     )
 
 
