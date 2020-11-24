@@ -5,11 +5,13 @@ import api from '../../api'
 import PraetorianList from '../../Components/PraetorianList/PraetorianList'
 import DetailView from '../../Components/DetailView/DetailView'
 import AddButton from '../../Components/AddButton/AddButton'
+import AddView from '../../Components/AddView/AddView'
 
 class Dashboard extends Component {
   state = {
     praetorians: [],
     showDetail: false,
+    showAdd: false,
     activePraetorian: null
   }
 
@@ -22,6 +24,7 @@ class Dashboard extends Component {
   }
 
   detailShowHandler = praetorian => {
+    this.addCloseHandler()
     this.changeActivePraetorian(praetorian)
     this.setState({ showDetail: true })
   }
@@ -34,8 +37,18 @@ class Dashboard extends Component {
     this.setState({ activePraetorian: praetorian })
   }
 
+  addShowHandler = () => {
+    this.detailCloseHandler()
+    this.setState({ showAdd: true })
+  }
+
+  addCloseHandler = () => {
+    this.setState({ showAdd: false })
+  }
+
   render() {
-    const { praetorians, showDetail, activePraetorian } = this.state
+    const { praetorians, showDetail, showAdd, activePraetorian } = this.state
+    
     return (
       <Container fluid className='h-100'>
         <Row className='h-100'>
@@ -43,9 +56,12 @@ class Dashboard extends Component {
             <PraetorianList
               praetorians={praetorians}
               showDetail={this.detailShowHandler} />
-            <AddButton />
+            <AddButton clicked={this.addShowHandler} />
           </Col>
           <Col md='6' className='text-center d-flex flex-column justify-content-center align-items-center'>
+            <AddView
+              show={showAdd}
+              clicked={this.addCloseHandler} />
             <DetailView
               show={showDetail}
               clicked={this.detailCloseHandler}
