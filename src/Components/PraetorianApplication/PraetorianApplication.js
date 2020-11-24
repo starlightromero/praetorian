@@ -11,6 +11,7 @@ import {
 } from 'reactstrap'
 import classes from './PraetorianApplication.module.css'
 import Loader from '..//UI/Loader/Loader'
+import api from '../../api'
 
 class PraetorianApplication extends Component {
   state = {
@@ -118,6 +119,27 @@ class PraetorianApplication extends Component {
 
   applicationHandler = event => {
     event.preventDefault()
+    this.setState({ loading: true })
+    const formData = {}
+    for (let formElementIdentifier in this.state.applicationForm) {
+      formData[formElementIdentifier] = this.state.applicationForm[formElementIdentifier].value
+    }
+    const { experience, phone, address, city, state, travel, background } = formData
+    api.patch('/praetorian', {
+      experience,
+      phone,
+      address,
+      city,
+      state,
+      travel,
+      background
+    }).then(res => {
+      console.log(res)
+      this.setState({ loading: false })
+    }).catch(err => {
+      console.log(err)
+      this.setState({ loading: false })
+    })
   }
 
   checkValidity = (value, rules) => {
