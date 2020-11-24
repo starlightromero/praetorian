@@ -6,6 +6,7 @@ import PraetorianList from '../../Components/PraetorianList/PraetorianList'
 import DetailView from '../../Components/DetailView/DetailView'
 import AddButton from '../../Components/AddButton/AddButton'
 import AddView from '../../Components/AddView/AddView'
+import LogoutButton from '../../Components/LogoutButton/LogoutButton'
 
 class Dashboard extends Component {
   state = {
@@ -51,6 +52,7 @@ class Dashboard extends Component {
     
     return (
       <Container fluid className='h-100'>
+        <LogoutButton {...this.props} />
         <Row className='h-100'>
           <Col md='6' className='text-center'>
             <PraetorianList
