@@ -77,10 +77,12 @@ class ApplyForm extends Component {
       email,
       password,
       account
-    }).then(response => {
+    }).then(res => {
       this.setState({ loading: false })
-      this.props.history.push('/praetorian-application')
-    }).catch(error => {
+      const id = res.data.id
+      this.props.history.push({pathname: '/praetorian-application/' + id})
+    }).catch(err => {
+      console.log(err)
       this.setState({ loading: false })
     })
   }
@@ -91,10 +93,11 @@ class ApplyForm extends Component {
       email,
       password,
       account
-    }).then(response => {
+    }).then(res => {
       this.setState({ loading: false })
       this.props.history.push('/confirmation')
-    }).catch(error => {
+    }).catch(err => {
+      console.log(err)
       this.setState({ loading: false })
     })
   }
