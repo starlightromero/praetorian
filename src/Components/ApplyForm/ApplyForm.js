@@ -88,6 +88,8 @@ class ApplyForm extends Component {
       this.setState({ loading: false })
       if (account === 'praetorian') {
         this.props.history.push('/praetorian-application')
+      } else if (account === 'executive') {
+        this.props.history.push('/confirmation')
       }
     }).catch(error => {
       this.setState({ loading: false })
