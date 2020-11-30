@@ -3,18 +3,19 @@ from sqlalchemy.orm import backref
 from praetorian import db
 
 
-class User(db.Model):
-    """User database class."""
+class Executive(db.Model):
+    """Executive class extends User."""
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.Text)
     account_type = db.Column(db.String(20), nullable=False)
+    praetorians = db.relationship("Praetorian", secondary="unit")
 
     def __repr__(self):
-        """Return User."""
-        return f"User(name: '{self.name}', email: '{self.email}')"
+        """Return Executive."""
+        return f"Executive(name: '{self.name}', email: '{self.email}')"
 
     @property
     def identity(self):
@@ -32,24 +33,9 @@ class User(db.Model):
         return cls.query.filter_by(email=email).one_or_none()
 
     @classmethod
-    def identify(cls, id):
+    def identify(cls, given_id):
         """Return User with the given id."""
-        return cls.query.get(id)
-
-
-class Executive(db.Model):
-    """Executive class extends User."""
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    password = db.Column(db.Text)
-    account_type = db.Column(db.String(20), nullable=False)
-    praetorians = db.relationship("Praetorian", secondary="unit")
-
-    def __repr__(self):
-        """Return Executive."""
-        return f"Executive(name: '{self.name}', email: '{self.email}')"
+        return cls.query.get(given_id)
 
 
 class Praetorian(db.Model):
@@ -72,6 +58,26 @@ class Praetorian(db.Model):
     def __repr__(self):
         """Return Praetorian."""
         return f"Praetorian(name: '{self.name}', email: '{self.email}')"
+
+    @property
+    def identity(self):
+        """Return User id."""
+        return self.id
+
+    @property
+    def rolenames(self):
+        """Return a list of User's account type."""
+        return [self.account_type]
+
+    @classmethod
+    def lookup(cls, email):
+        """Return User with a given email."""
+        return cls.query.filter_by(email=email).one_or_none()
+
+    @classmethod
+    def identify(cls, given_id):
+        """Return User with the given id."""
+        return cls.query.get(given_id)
 
 
 class Unit(db.Model):
