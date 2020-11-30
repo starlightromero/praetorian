@@ -1,7 +1,7 @@
 """Import libraries."""
 from flask import Blueprint, request, jsonify
 from flask_praetorian import auth_required
-from praetorian import db, guard
+from praetorian import db, guard_executive, guard_praetorian
 from praetorian.models import Praetorian, Executive
 from praetorian.api.exceptions import EmailLoginError
 
@@ -28,7 +28,7 @@ def create_praetorian():
     name = request.json.get("name")
     password = request.json.get("password")
     account_type = request.json.get("account")
-    hashed_password = guard.hash_password(password)
+    hashed_password = guard_praetorian.hash_password(password)
     praetorian = Praetorian(
         name=name,
         email=email,
@@ -79,7 +79,7 @@ def create_executive():
     name = request.json.get("name")
     password = request.json.get("password")
     account_type = request.json.get("account")
-    hashed_password = guard.hash_password(password)
+    hashed_password = guard_executive.hash_password(password)
     executive = Executive(
         name=name,
         email=email,
@@ -102,6 +102,6 @@ def login_user():
     if not executive:
         raise EmailLoginError(email)
     password = request.json.get("password")
-    executive = guard.authenticate(email, password)
-    token = guard.encode_jwt_token(executive)
+    executive = guard_executive.authenticate(email, password)
+    token = guard_executive.encode_jwt_token(executive)
     return jsonify({"token": token, "username": executive.name}), 200
