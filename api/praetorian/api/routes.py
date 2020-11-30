@@ -105,3 +105,22 @@ def login_user():
     executive = guard_executive.authenticate(email, password)
     token = guard_executive.encode_jwt_token(executive)
     return jsonify({"token": token, "username": executive.name}), 200
+
+
+@api.route("/executive/add", methods=["POST"])
+def add_praetorian():
+    """Add Praetorian to Executive."""
+    email = request.json.get("email")
+    executive = Executive.query.filter_by(email=email).first()
+    if not executive:
+        raise Exception
+    praetorian_id = request.json.get("praetorian_id")
+    praetorian = Praetorian.query.get(praetorian_id)
+    if not praetorian:
+        raise Exception
+    executive.add_praetorian(praetorian)
+    return jsonify(
+        {
+            "message": f"{praetorian.name} has been assigned to guard {executive.name}."
+        }
+    )
