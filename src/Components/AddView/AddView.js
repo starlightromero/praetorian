@@ -1,11 +1,11 @@
 import React from 'react'
-import Modal from '../UI/Modal/Modal'
+import SideMenu from '../UI/SideMenu/SideMenu'
 
 const AddView = props => {
   return (
-    <Modal {...props}>
+    <SideMenu {...props}>
       <h1>Add View</h1>
-    </Modal>
+    </SideMenu>
   )
 }
 

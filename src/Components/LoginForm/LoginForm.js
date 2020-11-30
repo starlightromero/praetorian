@@ -51,7 +51,7 @@ class LoginForm extends Component {
       formData[formElementIdentifier] = this.state.loginForm[formElementIdentifier].value
     }
     const { email, password } = formData
-    api.post('/login', {
+    api.post('/executive/login', {
       email,
       password
     }).then(response => {
@@ -130,7 +130,7 @@ class LoginForm extends Component {
           )
         } else if (!formElement.config.valid && formElement.config.touched) {
           feedback = (
-            <FormFeedback invalid key={`invalid-${formElement.id}`}>
+            <FormFeedback valid={false} key={`invalid-${formElement.id}`}>
               {formElement.config.invalidText}
             </FormFeedback>
           )
