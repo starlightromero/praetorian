@@ -43,10 +43,7 @@ class Executive(db.Model):
             self.praetorians.append(praetorian)
         else:
             self.praetorians = [praetorian]
-        if praetorian.executives:
-            praetorian.executives.append(self)
-        else:
-            praetorian.executives = [self]
+        praetorian.add_executive(self)
 
 
 class Praetorian(db.Model):
@@ -89,6 +86,13 @@ class Praetorian(db.Model):
     def identify(cls, given_id):
         """Return User with the given id."""
         return cls.query.get(given_id)
+
+    def add_executive(self, executive):
+        """Add an executive to the Praetorian"""
+        if self.executives:
+            self.executives.append(executive)
+        else:
+            self.executives = [executive]
 
 
 class Unit(db.Model):
