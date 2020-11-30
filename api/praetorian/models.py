@@ -37,6 +37,17 @@ class Executive(db.Model):
         """Return User with the given id."""
         return cls.query.get(given_id)
 
+    def add_praetorian(self, praetorian):
+        """Add a Praetorian to the Executive."""
+        if self.praetorians:
+            self.praetorians.append(praetorian)
+        else:
+            self.praetorians = [praetorian]
+        if praetorian.executives:
+            praetorian.executives.append(self)
+        else:
+            praetorian.executives = [self]
+
 
 class Praetorian(db.Model):
     """Praetorian class extends User."""
