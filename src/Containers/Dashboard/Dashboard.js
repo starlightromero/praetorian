@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import { ReactComponent as Shield } from '../../assets/shield.svg'
 import api from '../../api'
@@ -8,78 +8,70 @@ import AddButton from '../../Components/AddButton/AddButton'
 import AddView from '../../Components/AddView/AddView'
 import LogoutButton from '../../Components/LogoutButton/LogoutButton'
 
-class Dashboard extends Component {
-  state = {
-    praetorians: [],
-    showDetail: false,
-    showAdd: false,
-    activePraetorian: null
+const Dashboard = props => {
+  const [ praetorians, setPraetorians ] = useState([])
+  const [ showDetail, setShowDetail ] = useState(false)
+  const [ showAdd, setShowAdd ] = useState(false)
+  const [ activePraetorian, setActivePraetorian ] = useState(null)
+
+  api.get('/praetorians').then(res => {
+    setPraetorians(res.data.praetorians)
+  }).catch(err => {
+    console.log(err)
+  })
+
+  const detailShowHandler = praetorian => {
+    addCloseHandler()
+    changeActivePraetorian(praetorian)
+    setShowDetail(true)
   }
 
-  componentWillMount () {
-    api.get('/praetorians').then(res => {
-      this.setState({'praetorians': res.data.praetorians})
-    }).catch(err => {
-      console.log(err)
-    })
+  const detailCloseHandler = () => {
+    setShowDetail(false)
   }
 
-  detailShowHandler = praetorian => {
-    this.addCloseHandler()
-    this.changeActivePraetorian(praetorian)
-    this.setState({ showDetail: true })
+  const changeActivePraetorian = praetorian => {
+    setActivePraetorian(praetorian)
   }
 
-  detailCloseHandler = () => {
-    this.setState({ showDetail: false })
-  }
-
-  changeActivePraetorian = praetorian => {
-    this.setState({ activePraetorian: praetorian })
-  }
-
-  addShowHandler = () => {
+  const addShowHandler = () => {
     this.detailCloseHandler()
-    this.setState({ showAdd: true })
+    setShowAdd(true)
   }
 
-  addCloseHandler = () => {
-    this.setState({ showAdd: false })
+  const addCloseHandler = () => {
+    setShowAdd(false)
   }
 
-  removePraetorianHandler = () => {
-    
+  const removePraetorianHandler = () => {
+
   }
 
-  render() {
-    const { praetorians, showDetail, showAdd, activePraetorian } = this.state
-    
-    return (
-      <Container fluid className='h-100'>
-        <LogoutButton {...this.props} />
-        <Row className='h-100'>
-          <Col md='6' className='text-center'>
-            <PraetorianList
-              praetorians={praetorians}
-              showDetail={this.detailShowHandler} />
-            <AddButton clicked={this.addShowHandler} />
-          </Col>
-          <Col md='6' className='text-center d-flex flex-column justify-content-center align-items-center'>
-            <AddView
-              show={showAdd}
-              clicked={this.addCloseHandler} />
-            <DetailView
-              show={showDetail}
-              clicked={this.detailCloseHandler}
-              removeClicked={this.removePraetorianHandler}
-              praetorian={activePraetorian} />
-            <h1 className='text-white display-3'>Account</h1>
-            <Shield />
-          </Col>
-        </Row>
-      </Container>
-    )
-  }
+  return (
+    <Container fluid className='h-100'>
+      <LogoutButton {...props} />
+      <Row className='h-100'>
+        <Col md='6' className='text-center'>
+          <PraetorianList
+            praetorians={praetorians}
+            showDetail={detailShowHandler} />
+          <AddButton clicked={addShowHandler} />
+        </Col>
+        <Col md='6' className='text-center d-flex flex-column justify-content-center align-items-center'>
+          <AddView
+            show={showAdd}
+            clicked={addCloseHandler} />
+          <DetailView
+            show={showDetail}
+            clicked={detailCloseHandler}
+            removeClicked={removePraetorianHandler}
+            praetorian={activePraetorian} />
+          <h1 className='text-white display-3'>Account</h1>
+          <Shield />
+        </Col>
+      </Row>
+    </Container>
+  )
 }
 
 export default Dashboard
