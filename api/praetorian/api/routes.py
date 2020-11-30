@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify
 from flask_praetorian import auth_required
 from praetorian import db, guard
 from praetorian.models import Praetorian, Executive
+from praetorian.api.exceptions import EmailLoginError
 
 api = Blueprint("api", __name__)
 
@@ -99,7 +100,7 @@ def login_user():
     email = request.json.get("email")
     executive = Executive.query.filter_by(email=email).first()
     if not executive:
-        return jsonify({"error": "Executive does not exists"})
+        raise EmailLoginError(email)
     password = request.json.get("password")
     executive = guard.authenticate(email, password)
     token = guard.encode_jwt_token(executive)
