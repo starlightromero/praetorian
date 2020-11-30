@@ -1,34 +1,20 @@
 .Modal {
-  background-color: var(--gray-dark);
-  box-sizing: border-box;
-  height: 100%;
-  left: 50%;
-  padding: 16px;
-  position: fixed;
-  top: 0;
-  transform-origin: right top;
-  transition: all 0.3s ease-out;
-  width: 50%;
-  z-index: 500;
+    position: fixed;
+    z-index: 500;
+    background-color: white;
+    width: 70%;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px black;
+    padding: 16px;
+    left: 15%;
+    top: 30%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
 }
 
-.Close {
-  height: 40px;
-  position: absolute;
-  right: calc(100% - 90px);
-  top: 30px;
-}
-
-.Close:hover {
-  cursor: pointer;
-}
-
-.Close:hover path {
-  fill: var(--white);
-}
-
-@media (min-width: 1000px) {
-  .Modal {
-    width: 50%;
-  }
+@media (min-width: 600px) {
+    .Modal {
+        width: 500px;
+        left: calc(50% - 250px);
+    }
 }
