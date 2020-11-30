@@ -35,7 +35,7 @@ const Dashboard = props => {
   }
 
   const addShowHandler = () => {
-    this.detailCloseHandler()
+    detailCloseHandler()
     setShowAdd(true)
   }
 
