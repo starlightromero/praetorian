@@ -7,17 +7,19 @@ from praetorian.config import Config
 
 cors = CORS()
 db = SQLAlchemy()
-guard = Praetorian()
+guard_praetorian = Praetorian()
+guard_executive = Praetorian()
 
 
-def create_app(model, config_class=Config):
+def create_app(praetorian_class, executive_class, config_class=Config):
     """Create an instance of the praetorian app."""
     app = Flask(__name__)
     app.config.from_object(config_class)
 
     cors.init_app(app, cors_allowed_origins="*")
     db.init_app(app)
-    guard.init_app(app, model)
+    guard_praetorian.init_app(app, praetorian_class)
+    guard_executive.init_app(app, executive_class)
 
     from praetorian.api.routes import api
 
