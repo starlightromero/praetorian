@@ -7,7 +7,8 @@ const SideMenu = props => {
     <div
       className={classes.SideMenu}
       style={{
-        transform: props.show ? 'translateX(0)' : 'translateX(50vw)'
+        transform: props.show ? 'translateX(0)' : 'translateX(50vw)',
+        boxShadow: props.show ? '0 0 10px 0 var(--gray)' : '0 0 0 0'
       }}>
       <Close className={classes.Close} onClick={props.clicked} />
       {props.children}
