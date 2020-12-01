@@ -1,3 +1,11 @@
+.AddContainer {
+  bottom: 0;
+  height: 60px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
 .AddButton {
   fill: var(--gray);
   height: 40px;
