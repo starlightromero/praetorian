@@ -15,10 +15,6 @@
 }
 
 .Item:hover {
-  background-color: var(--gray-dark);
+  background-color: var(--white);
   cursor: pointer;
-}
-
-.Item:hover h6 {
-  color: var(--white);
 }
