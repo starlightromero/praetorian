@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import { ReactComponent as Shield } from '../../assets/shield.svg'
 import api from '../../api'
@@ -14,38 +14,44 @@ const Dashboard = props => {
   const [ showAdd, setShowAdd ] = useState(false)
   const [ activePraetorian, setActivePraetorian ] = useState(null)
 
-  api.get('/praetorians').then(res => {
-    setPraetorians(res.data.praetorians)
-  }).catch(err => {
-    console.log(err)
-  })
+  // useEffect(() => {
+  //   api.get('/praetorians').then(res => {
+  //     setPraetorians(res.data.praetorians)
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // }, [])
 
-  const detailShowHandler = praetorian => {
+  const addCloseHandler = useCallback(() => {
+    setShowAdd(false)
+  }, [])
+
+  const changeActivePraetorian = useCallback(praetorian => {
+    setActivePraetorian(praetorian)
+  }, [])
+
+  const detailShowHandler = useCallback(praetorian => {
     addCloseHandler()
     changeActivePraetorian(praetorian)
     setShowDetail(true)
-  }
+  }, [addCloseHandler, changeActivePraetorian])
 
-  const detailCloseHandler = () => {
+  const closeDetailHandler = useCallback(() => {
     setShowDetail(false)
-  }
+  }, [])
 
-  const changeActivePraetorian = praetorian => {
-    setActivePraetorian(praetorian)
-  }
-
-  const addShowHandler = () => {
-    detailCloseHandler()
+  const showAddMenuHandler = useCallback(() => {
+    closeDetailHandler()
     setShowAdd(true)
-  }
+  }, [closeDetailHandler])
 
-  const addCloseHandler = () => {
-    setShowAdd(false)
-  }
+  const addPraetorianHandler = useCallback(() => {
 
-  const removePraetorianHandler = () => {
+  }, [])
 
-  }
+  const removePraetorianHandler = useCallback(() => {
+
+  }, [])
 
   return (
     <Container fluid className='h-100'>
@@ -54,16 +60,17 @@ const Dashboard = props => {
         <Col md='6' className='text-center'>
           <PraetorianList
             praetorians={praetorians}
-            showDetail={detailShowHandler} />
-          <AddButton clicked={addShowHandler} />
+            clicked={detailShowHandler} />
+          <AddButton clicked={showAddMenuHandler} />
         </Col>
         <Col md='6' className='text-center d-flex flex-column justify-content-center align-items-center'>
           <AddView
             show={showAdd}
-            clicked={addCloseHandler} />
+            close={addCloseHandler}
+            addPraetorian={addPraetorianHandler} />
           <DetailView
             show={showDetail}
-            clicked={detailCloseHandler}
+            clicked={closeDetailHandler}
             removeClicked={removePraetorianHandler}
             praetorian={activePraetorian} />
           <h1 className='text-white display-3'>Account</h1>
