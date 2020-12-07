@@ -124,3 +124,12 @@ def add_praetorian():
             "message": f"{praetorian.name} has been assigned to guard {executive.name}."
         }
     )
+
+
+@api.route("/executive/praetorians", methods=["POST"])
+def get_selected_praetorians():
+    """Get all Praetorians for a given Executive."""
+    email = request.json.get("email")
+    executive = Executive.query.filter_by(email=email).first()
+    if not executive:
+        raise Exception
