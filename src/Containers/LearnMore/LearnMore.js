@@ -21,7 +21,7 @@ const LearnMore = props => {
           </Col>
         </Row>
       </Container>
-      <Container fluid>
+      <Container fluid className='mt-5 pt-5'>
         <Row className='align-items-end'>
           <Col md='4' className='text-center'>
             <ProtectionIcon />
